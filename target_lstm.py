@@ -135,34 +135,16 @@ class TARGET_LSTM(object):
 
         def unit(x, hidden_memory_tm1):
             previous_hidden_state, c_prev = tf.unstack(hidden_memory_tm1)
-
             # Input Gate
-            i = tf.sigmoid(
-                tf.matmul(x, self.Wi) +
-                tf.matmul(previous_hidden_state, self.Ui) + self.bi
-            )
-
+            i = tf.sigmoid(tf.matmul(x, self.Wi) + tf.matmul(previous_hidden_state, self.Ui) + self.bi)
             # Forget Gate
-            f = tf.sigmoid(
-                tf.matmul(x, self.Wf) +
-                tf.matmul(previous_hidden_state, self.Uf) + self.bf
-            )
-
+            f = tf.sigmoid(tf.matmul(x, self.Wf) + tf.matmul(previous_hidden_state, self.Uf) + self.bf)
             # Output Gate
-            o = tf.sigmoid(
-                tf.matmul(x, self.Wog) +
-                tf.matmul(previous_hidden_state, self.Uog) + self.bog
-            )
-
+            o = tf.sigmoid(tf.matmul(x, self.Wog) + tf.matmul(previous_hidden_state, self.Uog) + self.bog)
             # New Memory Cell
-            c_ = tf.nn.tanh(
-                tf.matmul(x, self.Wc) +
-                tf.matmul(previous_hidden_state, self.Uc) + self.bc
-            )
-
+            c_ = tf.nn.tanh(tf.matmul(x, self.Wc) + tf.matmul(previous_hidden_state, self.Uc) + self.bc)
             # Final Memory cell
             c = f * c_prev + i * c_
-
             # Current Hidden state
             current_hidden_state = o * tf.nn.tanh(c)
 
